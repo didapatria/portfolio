@@ -2,7 +2,18 @@
 
 Operations Terminal design system portfolio.
 
-**Live:** https://didapatria.dev *(placeholder — update after first Vercel deploy)*
+<p>
+  <a href="https://portfolio-didapatrias-projects.vercel.app">
+    <img src="https://img.shields.io/badge/Live-portfolio--didapatrias--projects.vercel.app-0a1322?logo=vercel&logoColor=white" alt="Live" />
+  </a>
+  <img src="https://img.shields.io/badge/version-1.0.0-1d6fe8" />
+  <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" />
+</p>
+
+**Live:** https://portfolio-didapatrias-projects.vercel.app
+
+**MRT Project:** https://mrt-station-dashboard.vercel.app
 
 ## Tech Stack
 
@@ -39,14 +50,14 @@ cp .env.example .env.local
 
 | Variable | Description |
 |---|---|
-| `NEXT_PUBLIC_BUILD_SHA` | Git commit SHA (auto-set by Vercel CI) |
-| `NEXT_PUBLIC_BUILD_DATE` | Deploy date YYYY-MM-DD (auto-set by `next.config.ts`) |
+| `NEXT_PUBLIC_BUILD_SHA` | Git commit SHA — set in Vercel project settings as `$VERCEL_GIT_COMMIT_SHA` |
+| `NEXT_PUBLIC_BUILD_DATE` | Deploy date YYYY-MM-DD (auto-set by `next.config.ts` at build time) |
 
 ## Deploy
 
-Push to `main` — Vercel auto-deploys. Build SHA is injected via Vercel's system environment variable `VERCEL_GIT_COMMIT_SHA`.
+Push to `main` — Vercel auto-deploys via GitHub connection.
 
-Set in Vercel project settings:
+In Vercel project settings → Environment Variables, add:
 ```
 NEXT_PUBLIC_BUILD_SHA = $VERCEL_GIT_COMMIT_SHA
 ```
