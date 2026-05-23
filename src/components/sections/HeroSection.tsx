@@ -8,13 +8,6 @@ const STATS = [
   { value: 3,   suffix: '',  label: 'LIVE DEPLOY.', delay: 460, isLast: true },
 ] as const;
 
-const BRACKET_POSITIONS = [
-  { top: 24, left: 24, top_b: true, left_b: true },
-  { top: 24, right: 24, top_b: true, right_b: true },
-  { bottom: 24, left: 24, bottom_b: true, left_b: true },
-  { bottom: 24, right: 24, bottom_b: true, right_b: true },
-] as const;
-
 export function HeroSection() {
   return (
     <section
@@ -38,36 +31,71 @@ export function HeroSection() {
           backgroundSize: '20px 20px',
           opacity: 0.6,
           pointerEvents: 'none',
+          zIndex: 0,
         }}
       />
 
-      {/* corner brackets */}
-      {BRACKET_POSITIONS.map((pos, i) => (
+      {/* scanline overlay */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage:
+            'repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+
+      {/* corner brackets — 20px arms, primary/30 */}
+      {(
+        [
+          { top: 24, left: 24,   bt: true,  bl: true  },
+          { top: 24, right: 24,  bt: true,  br: true  },
+          { bottom: 24, left: 24,  bb: true,  bl: true  },
+          { bottom: 24, right: 24, bb: true,  br: true  },
+        ] as const
+      ).map((pos, i) => (
         <span
           key={i}
           aria-hidden="true"
           style={{
             position: 'absolute',
-            width: 16,
-            height: 16,
+            width: 20,
+            height: 20,
             top:    'top' in pos    ? pos.top    : undefined,
             bottom: 'bottom' in pos ? pos.bottom : undefined,
             left:   'left' in pos   ? pos.left   : undefined,
             right:  'right' in pos  ? pos.right  : undefined,
-            borderTop:    'top_b' in pos    ? '1px solid rgba(29,111,232,0.2)' : 'none',
-            borderBottom: 'bottom_b' in pos ? '1px solid rgba(29,111,232,0.2)' : 'none',
-            borderLeft:   'left_b' in pos   ? '1px solid rgba(29,111,232,0.2)' : 'none',
-            borderRight:  'right_b' in pos  ? '1px solid rgba(29,111,232,0.2)' : 'none',
+            borderTop:    'bt' in pos ? '1px solid rgba(29,111,232,0.3)' : 'none',
+            borderBottom: 'bb' in pos ? '1px solid rgba(29,111,232,0.3)' : 'none',
+            borderLeft:   'bl' in pos ? '1px solid rgba(29,111,232,0.3)' : 'none',
+            borderRight:  'br' in pos ? '1px solid rgba(29,111,232,0.3)' : 'none',
+            zIndex: 2,
           }}
         />
       ))}
 
       {/* content column */}
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 760 }}>
+      <div style={{ position: 'relative', zIndex: 3, maxWidth: 760 }}>
 
-        {/* operator label */}
-        <p className="t-mono-xs" style={{ color: 'var(--fg-2)', margin: '0 0 16px' }}>
-          OPERATOR · FULLSTACK ENGINEER · SOUTH JAKARTA, ID
+        {/* operator label with blinking cursor */}
+        <p
+          className="t-mono-xs"
+          style={{ color: 'var(--fg-2)', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 0 }}
+        >
+          OPERATOR · FULLSTACK ENGINEER · SOUTH JAKARTA, ID&nbsp;
+          <span
+            style={{
+              display: 'inline-block',
+              width: 7,
+              height: 11,
+              background: 'var(--fg-2)',
+              verticalAlign: 'middle',
+              animation: 'subtitle-cursor 1s steps(1) infinite',
+            }}
+          />
         </p>
 
         {/* name */}
@@ -85,7 +113,6 @@ export function HeroSection() {
             color: 'var(--fg-1)',
             maxWidth: 560,
             margin: '0 0 48px',
-            textWrap: 'pretty' as React.CSSProperties['textWrap'],
           }}
         >
           I ship complete systems end-to-end — design tokens to E2E tests
@@ -130,10 +157,17 @@ export function HeroSection() {
               border: 'none',
               borderRadius: 'var(--radius-sm)',
               color: '#fff',
-              boxShadow: '0 0 24px rgba(29,111,232,0.25)',
+              boxShadow: '0 0 20px rgba(29,111,232,0.3)',
               cursor: 'pointer',
-              transition:
-                'background-color var(--dur-fast) var(--ease-base)',
+              transition: 'background-color var(--dur-fast) var(--ease-base), box-shadow var(--dur-fast) var(--ease-base)',
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.boxShadow = '0 0 32px rgba(29,111,232,0.5)';
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLAnchorElement;
+              el.style.boxShadow = '0 0 20px rgba(29,111,232,0.3)';
             }}
           >
             VIEW MRT PROJECT →
@@ -155,16 +189,13 @@ export function HeroSection() {
               borderRadius: 'var(--radius-sm)',
               color: 'var(--fg-1)',
               cursor: 'pointer',
-              transition:
-                'border-color var(--dur-fast) var(--ease-base), background-color var(--dur-fast) var(--ease-base)',
+              transition: 'border-color var(--dur-fast) var(--ease-base)',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                'rgba(59,130,246,0.3)';
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(59,130,246,0.3)';
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                'var(--border)';
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
             }}
           >
             GITHUB →
@@ -186,16 +217,13 @@ export function HeroSection() {
               borderRadius: 'var(--radius-sm)',
               color: 'var(--fg-1)',
               cursor: 'pointer',
-              transition:
-                'border-color var(--dur-fast) var(--ease-base), background-color var(--dur-fast) var(--ease-base)',
+              transition: 'border-color var(--dur-fast) var(--ease-base)',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                'rgba(59,130,246,0.3)';
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(59,130,246,0.3)';
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                'var(--border)';
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
             }}
           >
             LINKEDIN →

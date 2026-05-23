@@ -1,5 +1,6 @@
 'use client';
 
+import { Monitor, BookOpen, TestTube2, GitFork } from 'lucide-react';
 import { MonoChip } from '../MonoChip';
 import { OpsCard } from '../OpsCard';
 import { SectionLabel } from '../SectionLabel';
@@ -7,7 +8,7 @@ import { SectionLabel } from '../SectionLabel';
 const CHIPS = [
   '15 PAGES',
   '127 E2E TESTS',
-  '260+ COMMITS',
+  '290+ COMMITS',
   'v2.18.0',
   'REACT 19',
   'NODE.JS',
@@ -16,11 +17,11 @@ const CHIPS = [
   'PLAYWRIGHT',
 ];
 
-const BUTTONS = [
-  { label: 'LIVE DASHBOARD', href: 'https://mrt-station-dashboard.vercel.app' },
-  { label: 'API DOCS',       href: 'https://mrt-station-backend.fly.dev/api/docs' },
-  { label: 'E2E REPORT',     href: 'https://didapatria.github.io/mrt-station-dashboard' },
-  { label: 'SOURCE CODE',    href: 'https://github.com/didapatria/mrt-station-dashboard' },
+const BUTTONS: { label: string; href: string; icon: React.ReactNode }[] = [
+  { label: 'LIVE DASHBOARD', href: 'https://mrt-station-dashboard.vercel.app',          icon: <Monitor size={12} /> },
+  { label: 'API DOCS',       href: 'https://mrt-station-backend.fly.dev/api/docs',      icon: <BookOpen size={12} /> },
+  { label: 'E2E REPORT',     href: 'https://didapatria.github.io/mrt-station-dashboard', icon: <TestTube2 size={12} /> },
+  { label: 'SOURCE CODE',    href: 'https://github.com/didapatria/mrt-station-dashboard', icon: <GitFork size={12} /> },
 ];
 
 export function CurrentDeploymentSection() {
@@ -29,7 +30,7 @@ export function CurrentDeploymentSection() {
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
         <SectionLabel>CURRENT DEPLOYMENT</SectionLabel>
 
-        <OpsCard>
+        <OpsCard style={{ boxShadow: 'inset 0 1px 0 rgba(29,111,232,0.4)' }}>
           <div style={{ padding: '40px 48px' }}>
 
             {/* header row */}
@@ -58,7 +59,7 @@ export function CurrentDeploymentSection() {
                 </p>
               </div>
 
-              {/* DEPLOYED status chip */}
+              {/* DEPLOYED status chip — pulsing LED */}
               <span
                 style={{
                   display: 'inline-flex',
@@ -80,35 +81,23 @@ export function CurrentDeploymentSection() {
                     background: 'var(--status-active)',
                     boxShadow: '0 0 6px var(--status-active-glow)',
                     flexShrink: 0,
+                    animation: 'led-pulse 2.4s ease-in-out infinite',
                   }}
                 />
                 <span
                   className="t-mono-label"
                   style={{ color: 'var(--status-active)' }}
                 >
-                  DEPLOYED
+                  CURRENTLY DEPLOYED
                 </span>
               </span>
             </div>
 
             {/* hairline */}
-            <div
-              style={{
-                height: 1,
-                background: 'var(--border)',
-                marginBottom: 24,
-              }}
-            />
+            <div style={{ height: 1, background: 'var(--border)', marginBottom: 24 }} />
 
-            {/* mono chips */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 8,
-                marginBottom: 24,
-              }}
-            >
+            {/* mono chips — mobile horizontal scroll */}
+            <div className="chips-scroll" style={{ marginBottom: 24 }}>
               {CHIPS.map((chip) => (
                 <MonoChip key={chip}>{chip}</MonoChip>
               ))}
@@ -130,7 +119,7 @@ export function CurrentDeploymentSection() {
               127 Playwright E2E tests. Deployed on Fly.io + Vercel.
             </p>
 
-            {/* 2×2 entry buttons */}
+            {/* 2×2 entry buttons with icons */}
             <div
               className="entry-buttons"
               style={{
@@ -140,7 +129,7 @@ export function CurrentDeploymentSection() {
                 marginBottom: 24,
               }}
             >
-              {BUTTONS.map(({ label, href }) => (
+              {BUTTONS.map(({ label, href, icon }) => (
                 <a
                   key={label}
                   href={href}
@@ -161,6 +150,7 @@ export function CurrentDeploymentSection() {
                     transition:
                       'background-color var(--dur-fast) ease, border-color var(--dur-fast) ease, color var(--dur-fast) ease',
                     letterSpacing: '0.14em',
+                    gap: 8,
                   }}
                   onMouseEnter={(e) => {
                     const el = e.currentTarget as HTMLAnchorElement;
@@ -175,7 +165,10 @@ export function CurrentDeploymentSection() {
                     el.style.color = 'var(--fg-1)';
                   }}
                 >
-                  <span>{label}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {icon}
+                    {label}
+                  </span>
                   <span>→</span>
                 </a>
               ))}
@@ -192,12 +185,10 @@ export function CurrentDeploymentSection() {
                   transition: 'color var(--dur-fast) ease',
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    'var(--primary)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--primary)';
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    'var(--fg-2)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--fg-2)';
                 }}
               >
                 Read full case study →
@@ -206,14 +197,6 @@ export function CurrentDeploymentSection() {
           </div>
         </OpsCard>
       </div>
-
-      <style>{`
-        @media (max-width: 767px) {
-          .entry-buttons {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }

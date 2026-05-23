@@ -93,7 +93,7 @@ export function StatTile({
         flex: '1 1 180px',
       }}
     >
-      {/* accent line */}
+      {/* top accent line */}
       <div
         aria-hidden="true"
         style={{
@@ -104,6 +104,19 @@ export function StatTile({
           height: 2,
           background:
             'linear-gradient(90deg, var(--primary) 0%, transparent 100%)',
+        }}
+      />
+      {/* left accent bar */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: 3,
+          background: 'var(--primary)',
+          opacity: 0.7,
         }}
       />
       <span

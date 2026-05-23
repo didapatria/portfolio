@@ -1,9 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import { Lock } from 'lucide-react';
 import { MonoChip } from '../MonoChip';
 import { OpsCard } from '../OpsCard';
 import { SectionLabel } from '../SectionLabel';
+
+const gradientDivider = {
+  height: 1,
+  background:
+    'linear-gradient(90deg, rgba(29,111,232,0.3) 0%, rgba(29,111,232,0.08) 40%, transparent 100%)',
+  margin: '0 32px',
+} as const;
+
+const dashedDivider = {
+  height: 1,
+  background:
+    'repeating-linear-gradient(90deg, rgba(29,111,232,0.2) 0, rgba(29,111,232,0.2) 4px, transparent 4px, transparent 8px)',
+  margin: '0 32px',
+} as const;
 
 export function DeploymentLogSection() {
   const [alturianExpanded, setAlturianExpanded] = useState(false);
@@ -12,7 +27,6 @@ export function DeploymentLogSection() {
     display: 'flex',
     gap: 24,
     padding: '24px 32px',
-    transition: 'box-shadow var(--dur-fast) ease',
   };
 
   return (
@@ -22,16 +36,7 @@ export function DeploymentLogSection() {
 
         <OpsCard>
           {/* ── Row 1: Ruas ── */}
-          <div
-            style={rowBase}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow =
-                'inset 2px 0 0 rgba(29,111,232,0.6)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
-            }}
-          >
+          <div className="log-row" style={rowBase}>
             <div style={{ flexShrink: 0, width: 80 }}>
               <span
                 className="t-mono-data"
@@ -84,39 +89,21 @@ export function DeploymentLogSection() {
                 href="https://github.com/didapatria/fe_ruas_client"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="t-mono-xs"
-                style={{
-                  color: 'var(--fg-2)',
-                  transition: 'color var(--dur-fast) ease',
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    'var(--primary)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color =
-                    'var(--fg-2)';
-                }}
+                className="t-mono-xs terminal-handle"
+                style={{ color: 'var(--fg-2)' }}
               >
                 GITHUB ↗
               </a>
             </div>
           </div>
 
-          {/* divider */}
-          <div style={{ height: 1, background: 'var(--border)', margin: '0 32px' }} />
+          <div style={gradientDivider} />
 
           {/* ── Row 2: Alturian ── */}
           <div
+            className="log-row"
             style={{ ...rowBase, cursor: 'pointer', flexDirection: 'column' }}
             onClick={() => setAlturianExpanded((v) => !v)}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow =
-                'inset 2px 0 0 rgba(29,111,232,0.6)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
-            }}
           >
             <div style={{ display: 'flex', gap: 24 }}>
               <div style={{ flexShrink: 0, width: 80 }}>
@@ -169,20 +156,23 @@ export function DeploymentLogSection() {
                 </p>
               </div>
               <div style={{ flexShrink: 0 }}>
+                {/* Amber CONFIDENTIAL badge */}
                 <span
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
+                    gap: 5,
                     height: 24,
-                    padding: '0 12px',
-                    background: 'rgba(107,114,128,0.08)',
-                    border: '1px solid rgba(107,114,128,0.25)',
+                    padding: '0 10px',
+                    background: 'rgba(245,158,11,0.08)',
+                    border: '1px solid rgba(245,158,11,0.3)',
                     borderRadius: 'var(--radius-sm)',
                   }}
                 >
+                  <Lock size={10} color="#f59e0b" strokeWidth={2} />
                   <span
                     className="t-mono-xs"
-                    style={{ color: 'var(--status-idle)' }}
+                    style={{ color: '#f59e0b' }}
                   >
                     CONFIDENTIAL
                   </span>
@@ -190,7 +180,7 @@ export function DeploymentLogSection() {
               </div>
             </div>
 
-            {/* expand panel — grid-template-rows trick */}
+            {/* expand panel */}
             <div
               style={{
                 display: 'grid',
@@ -229,18 +219,10 @@ export function DeploymentLogSection() {
             </div>
           </div>
 
-          {/* dashed divider */}
-          <div
-            style={{
-              height: 1,
-              background:
-                'repeating-linear-gradient(90deg, var(--border) 0, var(--border) 4px, transparent 4px, transparent 8px)',
-              margin: '0 32px',
-            }}
-          />
+          <div style={dashedDivider} />
 
           {/* ── Row 3: Placeholder ── */}
-          <div style={{ ...rowBase, cursor: 'default' }}>
+          <div className="log-row" style={{ ...rowBase, cursor: 'default' }}>
             <div style={{ flexShrink: 0, width: 80 }}>
               <span
                 className="t-mono-data"

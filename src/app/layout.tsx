@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, JetBrains_Mono, Sora } from 'next/font/google';
 import { SystemBanner } from '@/components/SystemBanner';
+import { PageTransition } from '@/components/PageTransition';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import './globals.css';
 
 const bebasNeue = Bebas_Neue({
@@ -44,6 +46,21 @@ export const metadata: Metadata = {
   },
 };
 
+/* Anti-flash: runs before React hydrates — sets dark/light class from localStorage */
+const themeScript = `(function(){
+  try {
+    var s = localStorage.getItem('theme');
+    var d = document.documentElement;
+    if (s === 'light') { d.classList.add('light'); d.classList.remove('dark'); }
+    else if (s === 'dark') { d.classList.add('dark'); d.classList.remove('light'); }
+    else {
+      var sys = window.matchMedia('(prefers-color-scheme: light)').matches;
+      if (sys) d.classList.add('light');
+      else d.classList.add('dark');
+    }
+  } catch(e) {}
+})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -54,9 +71,14 @@ export default function RootLayout({
       lang="en"
       className={`${bebasNeue.variable} ${jetBrainsMono.variable} ${sora.variable}`}
     >
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body>
         <SystemBanner />
-        {children}
+        <PageTransition>{children}</PageTransition>
+        <ScrollToTop />
       </body>
     </html>
   );

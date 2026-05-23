@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { LEDDot } from './LEDDot';
+import { ThemeToggle } from './ThemeToggle';
 
 export function SystemBanner() {
   const [hhmm, setHhmm] = useState('--:--');
@@ -92,11 +93,15 @@ export function SystemBanner() {
         </span>
       </div>
 
-      {/* Right — version */}
-      <div className="banner-version" style={{ justifySelf: 'end' }}>
+      {/* Right — version + theme toggle */}
+      <div
+        className="banner-version"
+        style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: 12 }}
+      >
         <span className="t-mono-xs" style={{ color: 'var(--fg-2)' }}>
           PORTFOLIO v1.0.0
         </span>
+        <ThemeToggle />
       </div>
     </header>
   );

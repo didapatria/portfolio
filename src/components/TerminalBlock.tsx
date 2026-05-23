@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { OpsCard } from './OpsCard';
 
 interface ContactLine {
@@ -16,15 +17,36 @@ const LINES: ContactLine[] = [
 ];
 
 export function TerminalBlock() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pinged, setPinged] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPinged(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <OpsCard>
       <div
+        ref={ref}
         style={{
           background: 'var(--surface-0)',
           padding: '48px 56px',
           display: 'grid',
           gap: 12,
           borderRadius: 'var(--radius-xl)',
+          borderLeft: '2px solid rgba(29,111,232,0.4)',
         }}
       >
         {LINES.map(({ label, handle, href }) => (
@@ -63,21 +85,10 @@ export function TerminalBlock() {
               href={href}
               target={href.startsWith('mailto') ? undefined : '_blank'}
               rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              className="t-mono-data"
+              className="t-mono-data terminal-handle"
               style={{
                 color: 'var(--fg-1)',
                 fontSize: 12,
-                transition: 'color var(--dur-fast) var(--ease-base)',
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.color = 'var(--primary)';
-                el.style.textDecoration = 'underline';
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget as HTMLAnchorElement;
-                el.style.color = 'var(--fg-1)';
-                el.style.textDecoration = 'none';
               }}
             >
               {handle}
@@ -107,7 +118,9 @@ export function TerminalBlock() {
               height: 14,
               background: 'var(--primary)',
               verticalAlign: '-2px',
-              animation: 'cursor-blink 1s steps(2) infinite',
+              animation: pinged
+                ? 'cursor-ping 0.5s ease-out, cursor-blink 1s steps(2) 0.5s infinite'
+                : 'cursor-blink 1s steps(2) infinite',
             }}
           />
         </div>

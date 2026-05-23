@@ -64,7 +64,7 @@ export function CapabilityMatrixSection() {
                 className="matrix-row"
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '120px 80px 1fr',
+                  gridTemplateColumns: '100px 80px 1fr',
                   alignItems: 'start',
                   gap: 24,
                   padding: '24px 32px',
@@ -76,6 +76,8 @@ export function CapabilityMatrixSection() {
                     color: 'var(--fg-1)',
                     letterSpacing: '0.16em',
                     paddingTop: 4,
+                    width: 100,
+                    flexShrink: 0,
                   }}
                 >
                   {row.category}
@@ -83,7 +85,7 @@ export function CapabilityMatrixSection() {
                 <LEDBar level={row.level} />
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   {row.chips.map((chip) => (
-                    <MonoChip key={chip}>{chip}</MonoChip>
+                    <MonoChip key={chip} interactive>{chip}</MonoChip>
                   ))}
                 </div>
               </div>
@@ -91,7 +93,8 @@ export function CapabilityMatrixSection() {
                 <div
                   style={{
                     height: 1,
-                    background: 'var(--border)',
+                    background:
+                      'linear-gradient(90deg, rgba(29,111,232,0.2) 0%, rgba(29,111,232,0.05) 40%, transparent 100%)',
                     margin: '0 32px',
                   }}
                 />
@@ -100,18 +103,6 @@ export function CapabilityMatrixSection() {
           ))}
         </OpsCard>
       </div>
-
-      <style>{`
-        @media (max-width: 639px) {
-          .matrix-row {
-            grid-template-columns: 1fr auto !important;
-            grid-template-rows: auto auto;
-          }
-          .matrix-row > :nth-child(1) { grid-column: 1; grid-row: 1; }
-          .matrix-row > :nth-child(2) { grid-column: 2; grid-row: 1; }
-          .matrix-row > :nth-child(3) { grid-column: 1 / -1; grid-row: 2; }
-        }
-      `}</style>
     </section>
   );
 }
