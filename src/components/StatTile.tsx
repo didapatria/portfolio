@@ -12,10 +12,9 @@ interface StatTileProps {
 
 function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(
-    () =>
-      typeof window !== 'undefined'
-        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        : false
+    () => typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
   );
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -26,19 +25,12 @@ function useReducedMotion(): boolean {
   return reduced;
 }
 
-export function StatTile({
-  value,
-  suffix = '',
-  label,
-  delay,
-  isLast = false,
-}: StatTileProps) {
+export function StatTile({ value, suffix = '', label, delay, isLast = false }: StatTileProps) {
   const [display, setDisplay] = useState(0);
   const [visible, setVisible] = useState(false);
   const reduced = useReducedMotion();
   const booted = useRef(
-    typeof sessionStorage !== 'undefined' &&
-      sessionStorage.getItem('bootDone') === '1'
+    typeof sessionStorage !== 'undefined' && sessionStorage.getItem('bootDone') === '1'
   );
 
   useEffect(() => {
@@ -47,21 +39,15 @@ export function StatTile({
       setVisible(true);
       return;
     }
-
     const visTimer = setTimeout(() => setVisible(true), delay);
-
     const startTime = performance.now() + delay;
     const DURATION = 400;
     let raf: number;
-
     const tick = (now: number) => {
       const elapsed = now - startTime;
-      if (elapsed < 0) {
-        raf = requestAnimationFrame(tick);
-        return;
-      }
+      if (elapsed < 0) { raf = requestAnimationFrame(tick); return; }
       const t = Math.min(1, elapsed / DURATION);
-      const eased = 1 - Math.pow(1 - t, 2); /* easeOutQuad */
+      const eased = 1 - Math.pow(1 - t, 2);
       setDisplay(Math.round(value * eased));
       if (t < 1) {
         raf = requestAnimationFrame(tick);
@@ -69,76 +55,40 @@ export function StatTile({
         sessionStorage.setItem('bootDone', '1');
       }
     };
-
     raf = requestAnimationFrame(tick);
-    return () => {
-      clearTimeout(visTimer);
-      cancelAnimationFrame(raf);
-    };
+    return () => { clearTimeout(visTimer); cancelAnimationFrame(raf); };
   }, [value, delay, reduced, isLast]);
 
   return (
     <div
       style={{
-        position: 'relative',
         background: 'var(--card)',
         border: '1px solid var(--border)',
         borderRadius: 'var(--radius-lg)',
-        padding: '20px 24px',
-        minWidth: 180,
-        overflow: 'hidden',
+        padding: '16px 20px',
+        flex: '1 1 120px',
+        minWidth: 110,
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(12px)',
+        transform: visible ? 'translateY(0)' : 'translateY(8px)',
         transition: 'opacity 250ms ease, transform 250ms ease',
-        flex: '1 1 180px',
       }}
     >
-      {/* top accent line */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 2,
-          background:
-            'linear-gradient(90deg, var(--primary) 0%, transparent 100%)',
-        }}
-      />
-      {/* left accent bar */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          width: 3,
-          background: 'var(--primary)',
-          opacity: 0.7,
-        }}
-      />
       <span
-        className="t-display-md"
         style={{
           display: 'block',
+          fontFamily: 'var(--font-sans)',
+          fontSize: 28,
+          fontWeight: 700,
+          letterSpacing: '-0.025em',
           color: 'var(--fg-1)',
           fontVariantNumeric: 'tabular-nums',
+          lineHeight: 1,
         }}
       >
-        {display}
-        {suffix}
+        {display}{suffix}
       </span>
-      <div
-        style={{
-          width: 24,
-          height: 1,
-          background: 'var(--border)',
-          margin: '8px 0',
-        }}
-      />
-      <span className="t-mono-xs" style={{ color: 'var(--fg-2)' }}>
+      <div style={{ width: 20, height: 1, background: 'var(--border)', margin: '8px 0' }} />
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
         {label}
       </span>
     </div>
