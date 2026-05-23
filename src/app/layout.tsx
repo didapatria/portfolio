@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, JetBrains_Mono, Sora } from 'next/font/google';
-import { SystemBanner } from '@/components/SystemBanner';
 import { PageTransition } from '@/components/PageTransition';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import './globals.css';
@@ -80,7 +79,6 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <SystemBanner />
         <PageTransition>{children}</PageTransition>
         <ScrollToTop />
       </body>

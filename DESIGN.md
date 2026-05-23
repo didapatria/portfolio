@@ -245,7 +245,7 @@ The center of gravity of the entire page. Everything else exists to support this
   │                                                                                      │
   │  ─────────────────────────────────────────────────────────────────────────────       │ ← 1px hairline
   │                                                                                      │
-  │  [ 15 PAGES ]  [ 127 E2E TESTS ]  [ 260+ COMMITS ]  [ v2.18.0 ]                      │ ← mono chips, row 1
+  │  [ 15 PAGES ]  [ 127 E2E TESTS ]  [ 290+ COMMITS ]  [ v2.18.0 ]                      │ ← mono chips, row 1
   │  [ REACT 19 ]  [ NODE.JS ]  [ POSTGRESQL ]  [ DOCKER ]  [ PLAYWRIGHT ]               │ ← mono chips, row 2
   │                                                                                      │
   │  A full-stack operations dashboard for Jakarta's MRT — 15 pages, real-time SSE,      │ ← Sora 14, 2 sentences

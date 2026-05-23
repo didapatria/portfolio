@@ -1181,7 +1181,7 @@ import { OpsCard } from '../OpsCard';
 import { SectionLabel } from '../SectionLabel';
 
 const CHIPS = [
-  '15 PAGES', '127 E2E TESTS', '260+ COMMITS', 'v2.18.0',
+  '15 PAGES', '127 E2E TESTS', '290+ COMMITS', 'v2.18.0',
   'REACT 19', 'NODE.JS', 'POSTGRESQL', 'DOCKER', 'PLAYWRIGHT',
 ];
 
@@ -1880,7 +1880,7 @@ export const metadata: Metadata = {
 };
 
 const CHIPS = [
-  '15 PAGES', '127 E2E TESTS', '260+ COMMITS', 'v2.18.0',
+  '15 PAGES', '127 E2E TESTS', '290+ COMMITS', 'v2.18.0',
   'REACT 19', 'NODE.JS', 'POSTGRESQL', 'DOCKER', 'PLAYWRIGHT',
 ];
 
