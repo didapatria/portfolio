@@ -44,6 +44,10 @@ export const metadata: Metadata = {
     description:
       'Operations Terminal portfolio — Next.js, TypeScript, Playwright, Fly.io.',
   },
+  icons: {
+    icon: '/didapatria.svg',
+    shortcut: '/didapatria.svg',
+  },
 };
 
 /* Anti-flash: runs before React hydrates — sets dark/light class from localStorage */
