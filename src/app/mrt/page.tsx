@@ -164,7 +164,7 @@ export default function MRTPage() {
         <SectionTitle number="03">Design System</SectionTitle>
         <Prose>
           <p style={{ margin: '0 0 12px' }}>
-            Built "Operations Terminal" — a purpose-built dark ops-board design system. No component library. Every token, component, and motion primitive was defined from scratch: CSS custom properties for color, typography, and spacing; a component library including OpsCard, StatTile, TerminalBlock, LEDDot, and MonoChip; and a motion grammar (LED pulse, count-up animation, hover transitions) with full reduced-motion support.
+            Built &ldquo;Operations Terminal&rdquo; — a purpose-built dark ops-board design system. No component library. Every token, component, and motion primitive was defined from scratch: CSS custom properties for color, typography, and spacing; a component library including OpsCard, StatTile, TerminalBlock, LEDDot, and MonoChip; and a motion grammar (LED pulse, count-up animation, hover transitions) with full reduced-motion support.
           </p>
           <p style={{ margin: 0 }}>
             The system is portable — this portfolio was built on a variant of it. Design ownership is the claim; the shared tokens between the dashboard and the portfolio are the proof.

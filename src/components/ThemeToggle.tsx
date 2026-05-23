@@ -1,19 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 type Theme = 'dark' | 'light';
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('dark');
-
-  useEffect(() => {
-    /* Read current state from html class set by anti-flash script */
-    const html = document.documentElement;
-    const current = html.classList.contains('light') ? 'light' : 'dark';
-    setTheme(current);
-  }, []);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return document.documentElement.classList.contains('light') ? 'light' : 'dark';
+  });
 
   const toggle = () => {
     const next: Theme = theme === 'dark' ? 'light' : 'dark';
