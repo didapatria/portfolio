@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, JetBrains_Mono, Sora } from 'next/font/google';
+import { SystemBanner } from '@/components/SystemBanner';
 import './globals.css';
 
 const bebasNeue = Bebas_Neue({
@@ -53,7 +54,10 @@ export default function RootLayout({
       lang="en"
       className={`${bebasNeue.variable} ${jetBrainsMono.variable} ${sora.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SystemBanner />
+        {children}
+      </body>
     </html>
   );
 }
