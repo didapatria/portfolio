@@ -1,219 +1,146 @@
-/* src/styles/tokens.css — single source of truth for all design tokens */
-
+/* ── DARK (default) ───────────────────────────── */
 :root {
-  /* ── Surfaces ───────────────────────────────────── */
-  --surface-0:   oklch(0.09 0.022 245);
-  --surface-1:   oklch(0.115 0.022 245);
-  --bg:          oklch(0.115 0.022 245);
-  --surface-2:   oklch(0.152 0.02 243);
-  --card:        oklch(0.152 0.02 243);
-  --surface-3:   oklch(0.2 0.022 243);
-
-  /* ── Foreground ─────────────────────────────────── */
-  --fg-1:        oklch(0.92 0.008 240);
-  --fg-2:        oklch(0.6 0.018 245);
-  --fg-3:        rgba(148,163,184,.45);
-
-  /* ── Border ─────────────────────────────────────── */
-  --border:      oklch(0.225 0.022 243);
-
-  /* ── Accent / Primary ───────────────────────────── */
-  --primary-deep:  #1d6fe8;
+  --bg:            #09090b;
+  --card:          #111113;
+  --surface-0:     #0d0d0f;
+  --border:        #27272a;
+  --border-subtle: #1f1f23;
+  --fg-1:          #fafafa;
+  --fg-2:          #a1a1aa;
+  --fg-3:          #71717a;
+  --fg-4:          #3f3f46;
   --primary:       #3b82f6;
-  --primary-tint:  rgba(29,111,232,.08);
-  --primary-ring:  rgba(59,130,246,.5);
+  --primary-tint:  rgba(59,130,246,0.08);
+  --green:         #22c55e;
+  --amber:         #f59e0b;
+  --red:           #ef4444;
 
-  /* ── Status ─────────────────────────────────────── */
-  --status-active:      #22c55e;
-  --status-active-glow: rgba(34,197,94,.4);
-  --status-warn:        #f59e0b;
-  --status-idle:        #6b7280;
+  --font-sans: 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
 
-  /* ── Typography ─────────────────────────────────── */
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body:    'Sora', sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
 
-  /* ── Spacing (4px grid) ─────────────────────────── */
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  20px;
-  --space-6:  24px;
-  --space-8:  32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-
-  /* ── Radii ──────────────────────────────────────── */
-  --radius-sm:   4px;
-  --radius-lg:   8px;
-  --radius-xl:   12px;
-  --radius-pill: 20px;
-
-  /* ── Motion ─────────────────────────────────────── */
-  --dur-fast:   150ms;
-  --dur-base:   200ms;
-  --ease-base:  ease;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
 }
 
-/* ── Light mode via system preference (no manual override) ── */
-@media (prefers-color-scheme: light) {
-  html:not(.dark) {
-    --bg:        oklch(0.974 0.007 248);
-    --surface-1: oklch(0.974 0.007 248);
-    --card:      oklch(1 0 0);
-    --surface-0: oklch(0.968 0.009 248);
-    --surface-3: oklch(0.96 0.008 248);
-    --fg-1:      oklch(0.13 0.02 248);
-    --fg-2:      oklch(0.52 0.012 248);
-    --border:    oklch(0.9 0.01 248);
-    --primary:   #1d6fe8;
-  }
-}
-
-/* ── Light mode via manual toggle ────────────────── */
+/* ── LIGHT (html.light) ──────────────────────── */
 html.light {
-  --bg:        oklch(0.974 0.007 248);
-  --surface-1: oklch(0.974 0.007 248);
-  --card:      oklch(1 0 0);
-  --surface-0: oklch(0.968 0.009 248);
-  --surface-3: oklch(0.96 0.008 248);
-  --fg-1:      oklch(0.13 0.02 248);
-  --fg-2:      oklch(0.52 0.012 248);
-  --border:    oklch(0.9 0.01 248);
-  --primary:   #1d6fe8;
+  --bg:            #ffffff;
+  --card:          #f4f4f5;
+  --surface-0:     #fafafa;
+  --border:        #e4e4e7;
+  --border-subtle: #f0f0f0;
+  --fg-1:          #09090b;
+  --fg-2:          #3f3f46;
+  --fg-3:          #71717a;
+  --fg-4:          #a1a1aa;
+  --primary:       #2563eb;
+  --primary-tint:  rgba(37,99,235,0.06);
 }
 
-/* ── Reduced motion ─────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+/* ── TYPE CLASSES ────────────────────────────── */
+.t-display {
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
-
-/* ── Type utility classes ───────────────────────── */
-.t-display-xl {
-  font-family: var(--font-display);
-  font-size: clamp(64px, 8vw, 96px);
-  letter-spacing: -0.01em;
-  line-height: 0.92;
-  color: var(--fg-1);
-}
-
-.t-display-md {
-  font-family: var(--font-display);
-  font-size: 40px;
-  letter-spacing: 0.06em;
-  line-height: 1;
-}
-
-.t-display-sm {
-  font-family: var(--font-display);
-  font-size: 28px;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-.t-h3 {
-  font-family: var(--font-display);
-  font-size: 18px;
-  letter-spacing: 0.05em;
+.t-heading {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.2;
 }
-
-.t-body-lg {
-  font-family: var(--font-body);
+.t-subheading {
+  font-family: var(--font-sans);
   font-size: 16px;
-  letter-spacing: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.t-body-lg {
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
 }
-
 .t-body {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: 14px;
-  letter-spacing: 0;
-  line-height: 1.55;
+  line-height: 1.6;
 }
-
 .t-body-sm {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: 13px;
-  letter-spacing: 0;
   line-height: 1.5;
 }
-
-.t-mono-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.t-mono-xs {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.t-mono-data {
+.t-mono {
   font-family: var(--font-mono);
   font-size: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
 }
-
-.t-mono-tabular {
+.t-mono-sm {
   font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
+  font-size: 10px;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* ── Keyframes ───────────────────────────────────── */
-@keyframes led-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--status-active-glow); }
-  50%       { opacity: 0.4; box-shadow: 0 0 8px var(--status-active-glow); }
+/* ── NAVBAR RESPONSIVE ───────────────────────── */
+.nav-desktop { display: flex; }
+.nav-hamburger { display: none !important; }
+
+@media (max-width: 768px) {
+  .nav-desktop  { display: none !important; }
+  .nav-hamburger { display: flex !important; }
 }
 
-@keyframes colon-blink {
-  50% { opacity: 0; }
+/* ── CERT ACCORDION ──────────────────────────── */
+.cert-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-base) ease;
 }
+.cert-list.open { grid-template-rows: 1fr; }
+.cert-list-inner { overflow: hidden; }
 
-@keyframes cursor-blink {
-  50% { opacity: 0; }
+/* ── SCROLL TO TOP ───────────────────────────── */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--surface-0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity var(--dur-base) ease, transform var(--dur-base) ease,
+    border-color var(--dur-fast) ease, color var(--dur-fast) ease;
 }
+.scroll-top-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.scroll-top-btn:hover { border-color: rgba(37,99,235,0.4); color: var(--primary); }
 
-@keyframes subtitle-cursor {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-@keyframes cursor-ping {
-  0%   { transform: scale(1);   opacity: 1; }
-  30%  { transform: scale(1.5); opacity: 0.6; }
-  60%  { transform: scale(1);   opacity: 1; }
-  80%  { transform: scale(1.3); opacity: 0.7; }
-  100% { transform: scale(1);   opacity: 1; }
-}
-
-/* ── Accent line ─────────────────────────────────── */
-.accent-line {
-  width: 240px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
-  margin-top: 12px;
-  margin-bottom: 32px;
-}
-
-/* ── Banner responsive ──────────────────────────── */
-@media (max-width: 374px) {
-  .banner-full-text { display: none; }
-  .banner-clock { display: none !important; }
-  .banner-version { display: none !important; }
-}
-@media (min-width: 375px) and (max-width: 639px) {
-  .banner-version { display: none !important; }
+/* ── RESPONSIVE GRIDS ────────────────────────── */
+@media (max-width: 768px) {
+  .hero-grid       { grid-template-columns: 1fr !important; }
+  .about-grid      { grid-template-columns: 1fr !important; }
+  .projects-two-up { grid-template-columns: 1fr !important; }
+  .mrt-entry-btns  { grid-template-columns: 1fr 1fr !important; }
 }
