@@ -1,12 +1,12 @@
 # Adinda Fadhil Patria — Portfolio
 
-Operations Terminal design system portfolio.
+Refined Minimal Dark portfolio — multi-page, Geist, zinc palette, dark/light toggle.
 
 <p>
   <a href="https://portfolio-didapatrias-projects.vercel.app">
     <img src="https://img.shields.io/badge/Live-portfolio--didapatrias--projects.vercel.app-0a1322?logo=vercel&logoColor=white" alt="Live" />
   </a>
-  <img src="https://img.shields.io/badge/version-1.0.0-1d6fe8" />
+  <img src="https://img.shields.io/badge/version-2.0.0-1d6fe8" />
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" />
 </p>
@@ -15,13 +15,22 @@ Operations Terminal design system portfolio.
 
 **MRT Project:** https://mrt-station-dashboard.vercel.app
 
+## Routes
+
+| Route | Content |
+|---|---|
+| `/` | Hero — bio, MRT featured card, stat tiles |
+| `/about` | Timeline (work + edu), skill grid, cert accordion |
+| `/projects` | MRT featured full-width + Ruas / Alturian two-up |
+| `/mrt` | Case study — 6 sections, arch diagram, 3 challenges |
+
 ## Tech Stack
 
 - Next.js 16 (App Router)
 - Tailwind v4
 - Framer Motion
 - TypeScript strict
-- Google Fonts: Bebas Neue · JetBrains Mono · Sora
+- Google Fonts: Geist · Geist Mono
 - Vercel
 
 ## Setup
