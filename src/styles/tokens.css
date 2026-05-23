@@ -1,0 +1,193 @@
+/* src/styles/tokens.css — single source of truth for all design tokens */
+
+:root {
+  /* ── Surfaces ───────────────────────────────────── */
+  --surface-0:   oklch(0.09 0.022 245);   /* banner, footer */
+  --surface-1:   oklch(0.115 0.022 245);  /* page bg */
+  --bg:          oklch(0.115 0.022 245);
+  --surface-2:   oklch(0.152 0.02 243);   /* cards */
+  --card:        oklch(0.152 0.02 243);
+  --surface-3:   oklch(0.2 0.022 243);    /* row hover, chip bg */
+
+  /* ── Foreground ─────────────────────────────────── */
+  --fg-1:        oklch(0.92 0.008 240);   /* primary text */
+  --fg-2:        oklch(0.6 0.018 245);    /* muted labels */
+  --fg-3:        rgba(148,163,184,.45);   /* footer, timestamps */
+
+  /* ── Border ─────────────────────────────────────── */
+  --border:      oklch(0.225 0.022 243);
+
+  /* ── Accent / Primary ───────────────────────────── */
+  --primary-deep:  #1d6fe8;
+  --primary:       #3b82f6;
+  --primary-tint:  rgba(29,111,232,.08);
+  --primary-ring:  rgba(59,130,246,.5);
+
+  /* ── Status ─────────────────────────────────────── */
+  --status-active:      #22c55e;
+  --status-active-glow: rgba(34,197,94,.4);
+  --status-warn:        #f59e0b;
+  --status-idle:        #6b7280;
+
+  /* ── Typography (vars overridden by next/font) ───── */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Sora', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* ── Spacing (4px grid) ─────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ── Radii ──────────────────────────────────────── */
+  --radius-sm:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-pill: 20px;
+
+  /* ── Motion ─────────────────────────────────────── */
+  --dur-fast:   150ms;
+  --dur-base:   200ms;
+  --ease-base:  ease;
+}
+
+/* ── Light mode overrides ───────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:        oklch(0.974 0.007 248);
+    --surface-1: oklch(0.974 0.007 248);
+    --card:      oklch(1 0 0);
+    --surface-0: oklch(0.968 0.009 248);
+    --surface-3: oklch(0.96 0.008 248);
+    --fg-1:      oklch(0.13 0.02 248);
+    --fg-2:      oklch(0.52 0.012 248);
+    --border:    oklch(0.9 0.01 248);
+    --primary:   #1d6fe8;
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Type utility classes ───────────────────────── */
+.t-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 120px);
+  letter-spacing: 0.06em;
+  line-height: 0.9;
+  color: var(--fg-1);
+}
+
+.t-display-md {
+  font-family: var(--font-display);
+  font-size: 40px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.t-display-sm {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.t-h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.t-body-lg {
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+
+.t-body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 1.55;
+}
+
+.t-body-sm {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.t-mono-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.t-mono-xs {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.t-mono-data {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.t-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+/* ── Keyframe animations ────────────────────────── */
+@keyframes led-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--status-active-glow); }
+  50%       { opacity: 0.4; box-shadow: 0 0 8px var(--status-active-glow); }
+}
+
+@keyframes colon-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+
+/* ── Accent line reusable ───────────────────────── */
+.accent-line {
+  width: 240px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+  margin-top: 12px;
+  margin-bottom: 32px;
+}
+
+/* ── Banner responsive ──────────────────────────── */
+@media (max-width: 374px) {
+  .banner-full-text { display: none; }
+  .banner-clock { display: none !important; }
+  .banner-version { display: none !important; }
+}
+@media (min-width: 375px) and (max-width: 639px) {
+  .banner-version { display: none !important; }
+}
