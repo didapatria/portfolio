@@ -1,3 +1,5 @@
+'use client';
+
 const BUILD_SHA =
   process.env.NEXT_PUBLIC_BUILD_SHA?.slice(0, 7) ?? 'dev';
 const BUILD_DATE =
