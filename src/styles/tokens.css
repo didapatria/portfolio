@@ -23,8 +23,16 @@
   --radius-lg: 8px;
   --radius-xl: 12px;
 
-  --dur-fast: 120ms;
-  --dur-base: 200ms;
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+
+  --primary-glow: rgba(59,130,246,0.4);
+  --focus-ring:   rgba(59,130,246,0.55);
+}
+
+:root.light {
+  --primary-glow: rgba(37,99,235,0.35);
+  --focus-ring:   rgba(37,99,235,0.5);
 }
 
 /* ── LIGHT (:root.light) ────────────────────── */

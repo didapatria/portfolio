@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { MonoChip } from './MonoChip';
 import { StatusBadge } from './StatusBadge';
 
@@ -22,6 +22,12 @@ interface ProjectCardProps {
   confidential?: boolean;
 }
 
+function linkKind(href: string): 'anchor' | 'internal' | 'external' {
+  if (href.startsWith('#')) return 'anchor';
+  if (href.startsWith('/')) return 'internal';
+  return 'external';
+}
+
 export function ProjectCard({
   variant,
   title, period, status, description,
@@ -41,7 +47,6 @@ export function ProjectCard({
         width: '100%',
       }}
     >
-      {/* header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10, flexWrap: 'wrap', gap: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <StatusBadge variant={status} />
@@ -52,7 +57,6 @@ export function ProjectCard({
         </span>
       </div>
 
-      {/* title */}
       <h3 style={{
         fontFamily: 'var(--font-sans)',
         fontSize: featured ? 22 : 16,
@@ -65,7 +69,6 @@ export function ProjectCard({
         {title}
       </h3>
 
-      {/* description */}
       <p style={{
         fontFamily: 'var(--font-sans)',
         fontSize: 13,
@@ -77,7 +80,6 @@ export function ProjectCard({
         {description}
       </p>
 
-      {/* metrics */}
       {metrics.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginBottom: 12 }}>
           {metrics.map((m) => (
@@ -88,18 +90,17 @@ export function ProjectCard({
         </div>
       )}
 
-      {/* stack chips */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: links.length > 0 ? 16 : 0 }}>
         {stackChips.map((chip) => <MonoChip key={chip}>{chip}</MonoChip>)}
       </div>
 
-      {/* links */}
       {links.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {links.map(({ label, href, primary }) => {
-            const isInternal = href.startsWith('/');
+            const kind = linkKind(href);
+            const isExternal = kind === 'external';
             const sharedStyle: React.CSSProperties = {
-              display: 'inline-flex', alignItems: 'center',
+              display: 'inline-flex', alignItems: 'center', gap: 6,
               height: 32, padding: '0 14px',
               background: primary ? 'var(--fg-1)' : 'transparent',
               border: primary ? 'none' : '1px solid var(--border)',
@@ -109,34 +110,44 @@ export function ProjectCard({
               fontWeight: primary ? 600 : 400,
               color: primary ? 'var(--bg)' : 'var(--fg-2)',
               textDecoration: 'none',
-              transition: 'border-color 150ms ease, color 150ms ease',
+              transition: 'border-color var(--dur-fast) ease, color var(--dur-fast) ease, opacity var(--dur-fast) ease',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
             };
-            if (isInternal) {
-              return (
-                <Link key={label} href={href} style={sharedStyle}>
-                  {label} →
-                </Link>
-              );
-            }
+
+            const icon = isExternal
+              ? <ExternalLink size={12} />
+              : <ArrowRight size={12} />;
+
+            const hoverEnter = primary
+              ? (e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'; }
+              : (e: React.MouseEvent<HTMLAnchorElement>) => {
+                  const el = e.currentTarget as HTMLAnchorElement;
+                  el.style.borderColor = 'var(--primary)';
+                  el.style.color = 'var(--primary)';
+                };
+            const hoverLeave = primary
+              ? (e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }
+              : (e: React.MouseEvent<HTMLAnchorElement>) => {
+                  const el = e.currentTarget as HTMLAnchorElement;
+                  el.style.borderColor = 'var(--border)';
+                  el.style.color = 'var(--fg-2)';
+                };
+
+            const anchorProps = isExternal
+              ? { target: '_blank', rel: 'noopener noreferrer' as const }
+              : {};
+
             return (
               <a
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...anchorProps}
                 style={sharedStyle}
-                onMouseEnter={!primary ? (e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--primary)';
-                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--primary)';
-                } : undefined}
-                onMouseLeave={!primary ? (e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
-                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--fg-2)';
-                } : undefined}
+                onMouseEnter={hoverEnter}
+                onMouseLeave={hoverLeave}
               >
-                {label} ↗
+                {label} {icon}
               </a>
             );
           })}

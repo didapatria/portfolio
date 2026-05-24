@@ -47,7 +47,7 @@ export function TimelineItem({
           borderRadius: '50%',
           background: isActive ? 'var(--primary)' : 'var(--fg-4)',
           flexShrink: 0,
-          boxShadow: isActive ? '0 0 8px rgba(59,130,246,0.4)' : 'none',
+          boxShadow: isActive ? '0 0 8px var(--primary-glow)' : 'none',
         }} />
         {!isLast && (
           <div style={{ width: 1, flex: 1, minHeight: 20, background: 'var(--border)', marginTop: 4 }} />

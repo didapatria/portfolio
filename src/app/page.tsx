@@ -6,7 +6,7 @@ import { TimelineItem } from '@/components/TimelineItem';
 import { SkillGrid } from '@/components/SkillGrid';
 import { CertAccordion } from '@/components/CertAccordion';
 import { MonoChip } from '@/components/MonoChip';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowRight, ArrowLeft } from 'lucide-react';
 
 // ── HOME DATA ────────────────────────────────────
 
@@ -133,7 +133,7 @@ function EntryButtons() {
           target={href.startsWith('http') ? '_blank' : undefined}
           rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
           style={{
-            display: 'inline-flex', alignItems: 'center', height: 34, padding: '0 16px',
+            display: 'inline-flex', alignItems: 'center', gap: 6, height: 34, padding: '0 16px',
             background: primary ? 'var(--fg-1)' : 'transparent',
             border: primary ? 'none' : '1px solid var(--border)',
             borderRadius: 'var(--radius-sm)',
@@ -142,9 +142,18 @@ function EntryButtons() {
             color: primary ? 'var(--bg)' : 'var(--fg-2)',
             textDecoration: 'none',
             whiteSpace: 'nowrap',
+            transition: 'opacity var(--dur-fast) ease, border-color var(--dur-fast) ease, color var(--dur-fast) ease',
           }}
+          onMouseEnter={primary
+            ? (e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'; }
+            : (e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--primary)'; el.style.color = 'var(--primary)'; }
+          }
+          onMouseLeave={primary
+            ? (e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }
+            : (e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }
+          }
         >
-          {label} ↗
+          {label} <ExternalLink size={12} />
         </a>
       ))}
     </div>
@@ -155,9 +164,9 @@ function MrtSectionTitle({ number, children }: { number: string; children: React
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.1em' }}>{number}</span>
-      <h2 style={{ fontFamily: 'var(--font-sans)', fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--fg-1)', margin: 0 }}>
+      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--fg-1)', margin: 0 }}>
         {children}
-      </h2>
+      </h3>
     </div>
   );
 }
@@ -222,7 +231,7 @@ function Challenge({ title, problem, solution, outcome }: { title: string; probl
 
 export default function HomePage() {
   return (
-    <main>
+    <main id="main">
       {/* ── HOME ─────────────────────────────── */}
       <section id="home" style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px 96px' }}>
         <div
@@ -237,9 +246,9 @@ export default function HomePage() {
         >
           {/* bio */}
           <div style={{ paddingTop: 40 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 20 }}>
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--green)', letterSpacing: '0.08em' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 20, padding: '6px 12px 6px 10px', background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)', borderRadius: 'var(--radius-sm)' }}>
+              <span className="availability-dot" style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }} />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--green)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                 Available for engagement
               </span>
             </div>
@@ -261,13 +270,16 @@ export default function HomePage() {
               <a
                 href="#projects"
                 style={{
-                  display: 'inline-flex', alignItems: 'center', height: 36, padding: '0 18px',
+                  display: 'inline-flex', alignItems: 'center', gap: 6, height: 36, padding: '0 18px',
                   background: 'var(--fg-1)', borderRadius: 'var(--radius-sm)',
                   fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
                   color: 'var(--bg)', textDecoration: 'none',
+                  transition: 'opacity var(--dur-fast) ease',
                 }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }}
               >
-                View Projects →
+                View Projects <ArrowRight size={14} />
               </a>
               <a
                 href="https://github.com/didapatria"
@@ -283,7 +295,7 @@ export default function HomePage() {
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(59,130,246,0.3)'; el.style.color = 'var(--fg-1)'; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }}
               >
-                GitHub <ExternalLink size={12} />
+                GitHub <ExternalLink size={14} />
               </a>
               <a
                 href="https://linkedin.com/in/didapatria"
@@ -299,7 +311,7 @@ export default function HomePage() {
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(59,130,246,0.3)'; el.style.color = 'var(--fg-1)'; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }}
               >
-                LinkedIn <ExternalLink size={12} />
+                LinkedIn <ExternalLink size={14} />
               </a>
             </div>
           </div>
@@ -336,13 +348,14 @@ export default function HomePage() {
           <a
             href="#projects"
             style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
               fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-4)',
-              letterSpacing: '0.06em', transition: 'color 150ms ease', textDecoration: 'none',
+              letterSpacing: '0.06em', transition: 'color var(--dur-fast) ease', textDecoration: 'none',
             }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--primary)'; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--fg-4)'; }}
           >
-            Selected Work →
+            Selected Work <ArrowRight size={11} />
           </a>
         </div>
       </section>
@@ -443,19 +456,19 @@ export default function HomePage() {
           {/* back link */}
           <a
             href="#projects"
-            style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-4)', letterSpacing: '0.06em', display: 'inline-block', marginBottom: 32, transition: 'color 150ms ease', textDecoration: 'none' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-4)', letterSpacing: '0.06em', marginBottom: 32, transition: 'color var(--dur-fast) ease', textDecoration: 'none' }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--primary)'; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--fg-4)'; }}
           >
-            ← Back to Projects
+            <ArrowLeft size={11} /> Back to Projects
           </a>
 
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.14em', textTransform: 'uppercase', margin: '0 0 8px' }}>
             Case Study
           </p>
-          <h1 style={{ fontFamily: 'var(--font-sans)', fontSize: 32, fontWeight: 700, letterSpacing: '-0.025em', color: 'var(--fg-1)', margin: '0 0 8px', lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: 'var(--font-sans)', fontSize: 32, fontWeight: 700, letterSpacing: '-0.025em', color: 'var(--fg-1)', margin: '0 0 8px', lineHeight: 1.1 }}>
             MRT Jakarta Dashboard
-          </h1>
+          </h2>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--fg-3)', margin: '0 0 20px' }}>
             Apr–May 2026 · Full-stack · Deployed
           </p>
@@ -539,13 +552,15 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  display: 'inline-flex', alignItems: 'center', height: 32, padding: '0 14px',
+                  display: 'inline-flex', alignItems: 'center', gap: 6, height: 32, padding: '0 14px',
                   border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)',
                   fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--fg-2)', textDecoration: 'none',
-                  transition: 'border-color 150ms ease, color 150ms ease',
+                  transition: 'border-color var(--dur-fast) ease, color var(--dur-fast) ease',
                 }}
+                onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--primary)'; el.style.color = 'var(--primary)'; }}
+                onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }}
               >
-                View E2E Report ↗
+                View E2E Report <ExternalLink size={12} />
               </a>
             </div>
           </div>
@@ -563,11 +578,11 @@ export default function HomePage() {
           <div style={{ height: 1, background: 'var(--border)', margin: '0 0 32px' }} />
           <a
             href="#projects"
-            style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-4)', letterSpacing: '0.06em', textDecoration: 'none', transition: 'color 150ms ease' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-4)', letterSpacing: '0.06em', textDecoration: 'none', transition: 'color var(--dur-fast) ease' }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--primary)'; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--fg-4)'; }}
           >
-            ← Back to Projects
+            <ArrowLeft size={11} /> Back to Projects
           </a>
         </div>
       </section>
