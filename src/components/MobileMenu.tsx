@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
-type ActiveSection = 'home' | 'about' | 'projects' | 'mrt';
+type ActiveSection = 'home' | 'about' | 'projects';
 
 const LINKS = [
   { label: 'Work',     section: 'home' as ActiveSection },
@@ -19,10 +19,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ open, onClose, activeSection }: MobileMenuProps) {
-  const isActive = (section: ActiveSection) => {
-    if (section === 'projects') return activeSection === 'projects' || activeSection === 'mrt';
-    return activeSection === section;
-  };
+  const isActive = (section: ActiveSection) => activeSection === section;
 
   return (
     <AnimatePresence>

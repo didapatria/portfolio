@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { MonoChip } from './MonoChip';
 import { StatusBadge } from './StatusBadge';
@@ -137,6 +138,20 @@ export function ProjectCard({
             const anchorProps = isExternal
               ? { target: '_blank', rel: 'noopener noreferrer' as const }
               : {};
+
+            if (kind === 'internal') {
+              return (
+                <Link
+                  key={label}
+                  href={href}
+                  style={sharedStyle}
+                  onMouseEnter={hoverEnter as unknown as React.MouseEventHandler<HTMLAnchorElement>}
+                  onMouseLeave={hoverLeave as unknown as React.MouseEventHandler<HTMLAnchorElement>}
+                >
+                  {label} {icon}
+                </Link>
+              );
+            }
 
             return (
               <a

@@ -4,10 +4,10 @@ const BUILD_SHA = (process.env.NEXT_PUBLIC_BUILD_SHA ?? 'dev').slice(0, 7);
 const BUILD_DATE = process.env.NEXT_PUBLIC_BUILD_DATE ?? '';
 
 const NAV = [
-  { label: 'Work',     href: '#home' },
-  { label: 'About',    href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'MRT',      href: '#mrt' },
+  { label: 'Work',       href: '/#home' },
+  { label: 'About',      href: '/#about' },
+  { label: 'Projects',   href: '/#projects' },
+  { label: 'Case Study', href: '/mrt' },
 ];
 
 const SOCIAL = [
@@ -65,7 +65,7 @@ export function Footer() {
 
         <div style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.06em' }}>
-            © {new Date().getFullYear()} Adinda Fadhil Patria · v2.1.1
+            © {new Date().getFullYear()} Adinda Fadhil Patria · v3.0.0
           </span>
           <a
             href={`https://github.com/didapatria/portfolio/commit/${process.env.NEXT_PUBLIC_BUILD_SHA ?? 'main'}`}
