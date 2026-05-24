@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
 };
 
-const themeScript = `(function(){try{var s=localStorage.getItem('theme');var d=document.documentElement;if(s==='light'){d.classList.add('light');d.classList.remove('dark');}else if(s==='dark'){d.classList.add('dark');d.classList.remove('light');}else{var sys=window.matchMedia('(prefers-color-scheme: light)').matches;if(sys)d.classList.add('light');else d.classList.add('dark');}}catch(e){}})();`;
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.classList.add(t==='light'||t==='dark'?t:p);}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

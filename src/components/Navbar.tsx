@@ -1,20 +1,44 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Menu } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { MobileMenu } from './MobileMenu';
 
+type ActiveSection = 'home' | 'about' | 'projects' | 'mrt';
+
 const LINKS = [
-  { label: 'Work',     href: '/' },
-  { label: 'About',    href: '/about' },
-  { label: 'Projects', href: '/projects' },
+  { label: 'Work',     section: 'home' as ActiveSection },
+  { label: 'About',    section: 'about' as ActiveSection },
+  { label: 'Projects', section: 'projects' as ActiveSection },
 ] as const;
 
+function isLinkActive(linkSection: ActiveSection, active: ActiveSection) {
+  if (linkSection === 'projects') return active === 'projects' || active === 'mrt';
+  return active === linkSection;
+}
+
 export function Navbar() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<ActiveSection>('home');
+
+  useEffect(() => {
+    const SECTIONS: ActiveSection[] = ['home', 'about', 'projects', 'mrt'];
+
+    const update = () => {
+      const y = window.scrollY + window.innerHeight / 3;
+      let current: ActiveSection = 'home';
+      for (const id of SECTIONS) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= y) current = id;
+      }
+      setActive(current);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => window.removeEventListener('scroll', update);
+  }, []);
 
   return (
     <>
@@ -31,8 +55,8 @@ export function Navbar() {
           padding: '0 24px',
         }}
       >
-        <Link
-          href="/"
+        <a
+          href="#home"
           style={{
             fontFamily: 'var(--font-sans)',
             fontWeight: 700,
@@ -40,33 +64,32 @@ export function Navbar() {
             color: 'var(--fg-1)',
             letterSpacing: '-0.01em',
             marginRight: 'auto',
+            textDecoration: 'none',
           }}
         >
           AFP
-        </Link>
+        </a>
 
         {/* Desktop */}
         <nav
           className="nav-desktop"
           style={{ alignItems: 'center', gap: 24 }}
         >
-          {LINKS.map(({ label, href }) => {
-            const active = href === '/' ? pathname === '/' : pathname.startsWith(href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: 13,
-                  color: active ? 'var(--fg-1)' : 'var(--fg-3)',
-                  transition: 'color 150ms ease',
-                }}
-              >
-                {label}
-              </Link>
-            );
-          })}
+          {LINKS.map(({ label, section }) => (
+            <a
+              key={section}
+              href={`#${section}`}
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                color: isLinkActive(section, active) ? 'var(--fg-1)' : 'var(--fg-3)',
+                transition: 'color 150ms ease',
+                textDecoration: 'none',
+              }}
+            >
+              {label}
+            </a>
+          ))}
           <ThemeToggle />
         </nav>
 
@@ -80,27 +103,16 @@ export function Navbar() {
             border: 'none',
             cursor: 'pointer',
             padding: 4,
-            flexDirection: 'column',
-            gap: 4,
+            display: 'flex',
             alignItems: 'center',
+            color: 'var(--fg-3)',
           }}
         >
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              style={{
-                display: 'block',
-                width: 18,
-                height: 1.5,
-                background: 'var(--fg-3)',
-                borderRadius: 1,
-              }}
-            />
-          ))}
+          <Menu size={18} />
         </button>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} currentPath={pathname} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} activeSection={active} />
     </>
   );
 }

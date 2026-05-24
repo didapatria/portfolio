@@ -27,8 +27,8 @@
   --dur-base: 200ms;
 }
 
-/* ── LIGHT (html.light) ──────────────────────── */
-html.light {
+/* ── LIGHT (:root.light) ────────────────────── */
+:root.light {
   --bg:            #ffffff;
   --card:          #f4f4f5;
   --surface-0:     #fafafa;

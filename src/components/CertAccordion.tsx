@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 interface Cert {
   name: string;
@@ -24,8 +25,8 @@ export function CertAccordion({ certs }: { certs: Cert[] }) {
         }}
       >
         {certs.length} CERTIFICATIONS
-        <span style={{ fontSize: 10, display: 'inline-block', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' }}>
-          ▾
+        <span style={{ display: 'inline-flex', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms ease' }}>
+          <ChevronDown size={12} />
         </span>
       </button>
 

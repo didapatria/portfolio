@@ -1,22 +1,29 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import Link from 'next/link';
+import { X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
+type ActiveSection = 'home' | 'about' | 'projects' | 'mrt';
+
 const LINKS = [
-  { label: 'Work',     href: '/' },
-  { label: 'About',    href: '/about' },
-  { label: 'Projects', href: '/projects' },
+  { label: 'Work',     section: 'home' as ActiveSection },
+  { label: 'About',    section: 'about' as ActiveSection },
+  { label: 'Projects', section: 'projects' as ActiveSection },
 ] as const;
 
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
-  currentPath: string;
+  activeSection: ActiveSection;
 }
 
-export function MobileMenu({ open, onClose, currentPath }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, activeSection }: MobileMenuProps) {
+  const isActive = (section: ActiveSection) => {
+    if (section === 'projects') return activeSection === 'projects' || activeSection === 'mrt';
+    return activeSection === section;
+  };
+
   return (
     <AnimatePresence>
       {open && (
@@ -28,7 +35,7 @@ export function MobileMenu({ open, onClose, currentPath }: MobileMenuProps) {
           style={{
             position: 'fixed',
             inset: 0,
-            background: '#09090b',
+            background: 'var(--bg)',
             zIndex: 100,
             display: 'flex',
             flexDirection: 'column',
@@ -37,13 +44,13 @@ export function MobileMenu({ open, onClose, currentPath }: MobileMenuProps) {
         >
           {/* Top bar mirrors Navbar */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 48 }}>
-            <Link
-              href="/"
+            <a
+              href="#home"
               onClick={onClose}
-              style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 14, color: 'var(--fg-1)' }}
+              style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 14, color: 'var(--fg-1)', textDecoration: 'none' }}
             >
               AFP
-            </Link>
+            </a>
             <button
               onClick={onClose}
               aria-label="Close navigation"
@@ -52,36 +59,34 @@ export function MobileMenu({ open, onClose, currentPath }: MobileMenuProps) {
                 border: 'none',
                 cursor: 'pointer',
                 color: 'var(--fg-3)',
-                fontSize: 18,
                 padding: 4,
-                lineHeight: 1,
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              ✕
+              <X size={18} />
             </button>
           </div>
 
           <nav style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 40, flex: 1 }}>
-            {LINKS.map(({ label, href }) => {
-              const active = href === '/' ? currentPath === '/' : currentPath.startsWith(href);
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={onClose}
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 28,
-                    fontWeight: 600,
-                    letterSpacing: '-0.02em',
-                    color: active ? 'var(--fg-1)' : 'var(--fg-4)',
-                    padding: '10px 0',
-                  }}
-                >
-                  {label}
-                </Link>
-              );
-            })}
+            {LINKS.map(({ label, section }) => (
+              <a
+                key={section}
+                href={`#${section}`}
+                onClick={onClose}
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 28,
+                  fontWeight: 600,
+                  letterSpacing: '-0.02em',
+                  color: isActive(section) ? 'var(--fg-1)' : 'var(--fg-4)',
+                  padding: '10px 0',
+                  textDecoration: 'none',
+                }}
+              >
+                {label}
+              </a>
+            ))}
           </nav>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

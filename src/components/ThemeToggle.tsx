@@ -1,23 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
-type Theme = 'dark' | 'light';
+function subscribe(callback: () => void) {
+  const obs = new MutationObserver(callback);
+  obs.observe(document.documentElement, { attributeFilter: ['class'] });
+  return () => obs.disconnect();
+}
+
+function getSnapshot() {
+  return document.documentElement.classList.contains('light') ? 'light' : 'dark';
+}
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    return document.documentElement.classList.contains('light') ? 'light' : 'dark';
-  });
+  const theme = useSyncExternalStore(subscribe, getSnapshot, () => 'dark');
 
   const toggle = () => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark';
-    const html = document.documentElement;
-    html.classList.remove('dark', 'light');
-    html.classList.add(next);
+    const next = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.classList.remove('dark', 'light');
+    document.documentElement.classList.add(next);
     localStorage.setItem('theme', next);
-    setTheme(next);
   };
 
   return (
@@ -35,8 +38,7 @@ export function ThemeToggle() {
         borderRadius: 'var(--radius-sm)',
         color: 'var(--fg-2)',
         cursor: 'pointer',
-        transition:
-          'border-color var(--dur-fast) ease, color var(--dur-fast) ease',
+        transition: 'border-color var(--dur-fast) ease, color var(--dur-fast) ease',
         flexShrink: 0,
       }}
       onMouseEnter={(e) => {
