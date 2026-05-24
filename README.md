@@ -1,12 +1,12 @@
 # Adinda Fadhil Patria — Portfolio
 
-Refined Minimal Dark portfolio — SPA, Geist, zinc palette, dark/light toggle.
+Refined Minimal Dark portfolio — hybrid SPA + dedicated `/mrt` case study route, Geist, zinc palette, dark/light toggle.
 
 <p>
   <a href="https://portfolio-didapatrias-projects.vercel.app">
     <img src="https://img.shields.io/badge/Live-portfolio--didapatrias--projects.vercel.app-0a1322?logo=vercel&logoColor=white" alt="Live" />
   </a>
-  <img src="https://img.shields.io/badge/version-2.1.1-1d6fe8" />
+  <img src="https://img.shields.io/badge/version-3.0.0-1d6fe8" />
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" />
 </p>
@@ -17,14 +17,25 @@ Refined Minimal Dark portfolio — SPA, Geist, zinc palette, dark/light toggle.
 
 ## Routes
 
-Single page — all content on `/` with anchor sections.
+Hybrid — landing scrolls between anchor sections, MRT case study lives on its own route.
 
-| Anchor | Content |
+| Route | Content |
 |---|---|
-| `#home` | Hero — bio, MRT featured card, stat tiles |
-| `#about` | Timeline (work + edu), skill grid, cert accordion |
-| `#projects` | MRT featured full-width + Ruas / Alturian two-up |
-| `#mrt` | Case study — 6 sections, arch diagram, 3 challenges |
+| `/#home` | Hero — name 80px, bio, CTAs, "Featured Work" MRT card + 3 stat tiles |
+| `/#about` | Timeline (work + edu), ranked top-6 skill bars, cert accordion |
+| `/#projects` | MRT featured full-width + Ruas / Alturian two-up |
+| `/mrt` | Case study — 6 sections, arch diagram, 3 challenges |
+
+## Keyboard shortcuts
+
+Type `g` then one of:
+
+| Keys | Goes to |
+|---|---|
+| `g h` | `/#home` |
+| `g a` | `/#about` |
+| `g p` | `/#projects` |
+| `g m` | `/mrt` |
 
 ## Tech Stack
 
@@ -75,6 +86,15 @@ NEXT_PUBLIC_BUILD_SHA = $VERCEL_GIT_COMMIT_SHA
 ```
 
 ## Changelog
+
+### v3.0.0
+- **Hybrid architecture** — `/mrt` extracted to dedicated Next.js route; home now scrolls only Home · About · Projects
+- **Hero rebuild** — single-column, name `clamp(56px, 7vw, 80px)`, MRT card full-width below CTAs, 3 stat tiles in a row
+- **Nav** — `IntersectionObserver` rootMargin `-40% 0px -55% 0px` + highest-ratio tiebreaker (accurate active state); "Available" dot left of AFP (desktop only)
+- **Timeline** — 10px company dots with pulse on current role, 2px sub-stem, Alturian sub-entries indented 24px with 6px sub-dots, labeled "Education" divider
+- **Skills** — ranked top-6 bar chart (proficiency % + level label), animated via Framer Motion `useInView`; full category grid hidden behind expand toggle
+- **Polish** — `g`-prefix keyboard shortcuts (`g h/a/p/m`), dynamic `opengraph-image.tsx` + `twitter-image.tsx` via `next/og`, updated metadata description
+- Bump `package.json` → `3.0.0`, footer version + CLAUDE.md architecture note
 
 ### v2.1.1
 - UI/UX polish + design system audit — full review delivered, 12 issues fixed
