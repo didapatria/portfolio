@@ -34,39 +34,61 @@ function ConfidentialBadge() {
   );
 }
 
+function CompanyDot({ isActive }: { isActive: boolean }) {
+  return (
+    <div style={{ position: 'relative', width: 10, height: 10, flexShrink: 0 }}>
+      <div style={{
+        width: 10, height: 10,
+        borderRadius: '50%',
+        background: isActive ? 'var(--primary)' : 'var(--fg-4)',
+        boxShadow: isActive ? '0 0 8px var(--primary-glow)' : 'none',
+        position: 'relative',
+        zIndex: 1,
+      }} />
+      {isActive && (
+        <span
+          className="timeline-ping"
+          style={{
+            position: 'absolute',
+            inset: -2,
+            borderRadius: '50%',
+            border: '1.5px solid var(--primary)',
+            opacity: 0.4,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
 export function TimelineItem({
   org, period, location, role, stack, bullets, chips,
   badge, subRoles, isActive = false, isLast = false,
 }: TimelineItemProps) {
   return (
-    <div style={{ display: 'flex', gap: 14 }}>
+    <div style={{ display: 'flex', gap: 16 }}>
       {/* dot + stem */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: 3 }}>
-        <div style={{
-          width: 8, height: 8,
-          borderRadius: '50%',
-          background: isActive ? 'var(--primary)' : 'var(--fg-4)',
-          flexShrink: 0,
-          boxShadow: isActive ? '0 0 8px var(--primary-glow)' : 'none',
-        }} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, paddingTop: 4 }}>
+        <CompanyDot isActive={isActive} />
         {!isLast && (
-          <div style={{ width: 1, flex: 1, minHeight: 20, background: 'var(--border)', marginTop: 4 }} />
+          <div style={{ width: 2, flex: 1, minHeight: 24, background: 'var(--border-subtle)', marginTop: 4 }} />
         )}
       </div>
 
       {/* content */}
-      <div style={{ paddingBottom: isLast ? 0 : 24, flex: 1, minWidth: 0 }}>
+      <div style={{ paddingBottom: isLast ? 0 : 28, flex: 1, minWidth: 0 }}>
         {/* org + period */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: location ? 1 : 2, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, color: 'var(--fg-1)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: location ? 2 : 4, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 600, color: 'var(--fg-1)', letterSpacing: '-0.005em' }}>
             {org}
           </span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.04em', flexShrink: 0 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', letterSpacing: '0.04em', flexShrink: 0 }}>
             {period}
           </span>
         </div>
         {location && (
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.04em', margin: '0 0 4px' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.04em', margin: '0 0 6px' }}>
             {location}
           </p>
         )}
@@ -74,17 +96,17 @@ export function TimelineItem({
         {/* flat role */}
         {role && (
           <div style={{ marginBottom: 4 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: bullets?.length ? 4 : 0 }}>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--fg-3)' }}>{role}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: bullets?.length ? 6 : 0 }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 400, color: 'var(--fg-2)' }}>{role}</span>
               {badge === 'confidential' && <ConfidentialBadge />}
             </div>
             {bullets?.map((b, i) => (
-              <p key={i} style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--fg-3)', margin: '2px 0', lineHeight: 1.5 }}>
+              <p key={i} style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--fg-2)', margin: '4px 0', lineHeight: 1.6 }}>
                 · {b}
               </p>
             ))}
             {chips && chips.length > 0 && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 8 }}>
                 {chips.map((c) => <MonoChip key={c}>{c}</MonoChip>)}
               </div>
             )}
@@ -100,27 +122,48 @@ export function TimelineItem({
 
         {/* parent-only badge (no role) */}
         {!role && badge === 'confidential' && (
-          <div style={{ marginBottom: 6 }}>
+          <div style={{ marginBottom: 8 }}>
             <ConfidentialBadge />
           </div>
         )}
 
         {/* nested sub-roles */}
         {subRoles && subRoles.length > 0 && (
-          <div style={{ marginTop: 10, borderLeft: '1px solid var(--border)', paddingLeft: 14, display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div
+            style={{
+              marginTop: 12,
+              marginLeft: 24,
+              borderLeft: '2px solid var(--border-subtle)',
+              paddingLeft: 16,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+            }}
+          >
             {subRoles.map((sr, i) => (
-              <div key={i}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--fg-2)' }}>{sr.title}</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.04em', flexShrink: 0 }}>{sr.period}</span>
+              <div key={i} style={{ position: 'relative' }}>
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: -22,
+                    top: 6,
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: 'var(--border)',
+                  }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, flexWrap: 'wrap', marginBottom: 6 }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 500, color: 'var(--fg-1)' }}>{sr.title}</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--fg-3)', letterSpacing: '0.04em', flexShrink: 0 }}>{sr.period}</span>
                 </div>
                 {sr.bullets.map((b, bi) => (
-                  <p key={bi} style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--fg-3)', margin: '2px 0', lineHeight: 1.5 }}>
+                  <p key={bi} style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--fg-2)', margin: '3px 0', lineHeight: 1.6 }}>
                     · {b}
                   </p>
                 ))}
                 {sr.chips.length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 8 }}>
                     {sr.chips.map((c) => <MonoChip key={c}>{c}</MonoChip>)}
                   </div>
                 )}
