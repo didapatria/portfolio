@@ -10,6 +10,7 @@ interface SubRole {
 interface TimelineItemProps {
   org: string;
   period: string;
+  location?: string;
   role?: string;
   stack?: string;
   bullets?: string[];
@@ -34,7 +35,7 @@ function ConfidentialBadge() {
 }
 
 export function TimelineItem({
-  org, period, role, stack, bullets, chips,
+  org, period, location, role, stack, bullets, chips,
   badge, subRoles, isActive = false, isLast = false,
 }: TimelineItemProps) {
   return (
@@ -56,7 +57,7 @@ export function TimelineItem({
       {/* content */}
       <div style={{ paddingBottom: isLast ? 0 : 24, flex: 1, minWidth: 0 }}>
         {/* org + period */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: 2, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8, marginBottom: location ? 1 : 2, flexWrap: 'wrap' }}>
           <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, color: 'var(--fg-1)' }}>
             {org}
           </span>
@@ -64,6 +65,11 @@ export function TimelineItem({
             {period}
           </span>
         </div>
+        {location && (
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-4)', letterSpacing: '0.04em', margin: '0 0 4px' }}>
+            {location}
+          </p>
+        )}
 
         {/* flat role */}
         {role && (

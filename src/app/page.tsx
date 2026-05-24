@@ -6,6 +6,7 @@ import { TimelineItem } from '@/components/TimelineItem';
 import { SkillGrid } from '@/components/SkillGrid';
 import { CertAccordion } from '@/components/CertAccordion';
 import { MonoChip } from '@/components/MonoChip';
+import { ExternalLink } from 'lucide-react';
 
 // ── HOME DATA ────────────────────────────────────
 
@@ -39,23 +40,28 @@ const WORK = [
   {
     org: 'Alturian Group',
     period: 'Apr 2024 – May 2026',
+    location: 'South Jakarta · Retail Technology',
     badge: 'confidential' as const,
     subRoles: [
       {
         title: 'Software Engineer Specialist',
         period: 'Jan 2026 – May 2026',
         bullets: [
-          'Led enterprise e-commerce and ERP development for retail industry clients',
-          'Extended existing Vue/Angular codebases with React and TypeScript modules',
+          'Designed and developed scalable web and hybrid mobile apps for retail operations',
+          'Built and maintained backend: RESTful APIs, scheduled jobs, automation (Laravel + SQL)',
+          'Improved frontend maintainability and performance across multiple apps',
+          'Collaborated with QA, product, and design to deliver production-ready solutions',
         ],
-        chips: ['Laravel', 'Vue.js', 'React.js', 'Angular', 'Ionic', 'TypeScript', 'MySQL'],
+        chips: ['Laravel', 'Vue.js', 'React', 'Angular', 'Ionic', 'TypeScript', 'Tailwind', 'MySQL'],
       },
       {
         title: 'Junior Software Engineer',
         period: 'Apr 2024 – Jan 2026',
         bullets: [
-          'Developed customer-facing mobile apps with Ionic Framework',
-          'Built internal tools and reports in Laravel + Vue.js for live retail clients',
+          'Fullstack features across Laravel, Vue.js, Angular, and Ionic Framework',
+          'REST API integration and data processing workflows for internal business systems',
+          'Automation: scheduled jobs, background workers, import/export modules',
+          'Debugging, maintenance, and production support for system reliability',
         ],
         chips: ['Laravel', 'Vue.js', 'Angular', 'Ionic', 'MySQL'],
       },
@@ -267,7 +273,7 @@ export default function HomePage() {
                 href="https://github.com/didapatria"
                 target="_blank" rel="noopener noreferrer"
                 style={{
-                  display: 'inline-flex', alignItems: 'center', height: 36, padding: '0 18px',
+                  display: 'inline-flex', alignItems: 'center', gap: 6, height: 36, padding: '0 18px',
                   background: 'transparent', border: '1px solid var(--border)',
                   borderRadius: 'var(--radius-sm)',
                   fontFamily: 'var(--font-sans)', fontSize: 13,
@@ -277,13 +283,13 @@ export default function HomePage() {
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(59,130,246,0.3)'; el.style.color = 'var(--fg-1)'; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }}
               >
-                GitHub ↗
+                GitHub <ExternalLink size={12} />
               </a>
               <a
                 href="https://linkedin.com/in/didapatria"
                 target="_blank" rel="noopener noreferrer"
                 style={{
-                  display: 'inline-flex', alignItems: 'center', height: 36, padding: '0 18px',
+                  display: 'inline-flex', alignItems: 'center', gap: 6, height: 36, padding: '0 18px',
                   background: 'transparent', border: '1px solid var(--border)',
                   borderRadius: 'var(--radius-sm)',
                   fontFamily: 'var(--font-sans)', fontSize: 13,
@@ -293,7 +299,7 @@ export default function HomePage() {
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(59,130,246,0.3)'; el.style.color = 'var(--fg-1)'; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border)'; el.style.color = 'var(--fg-2)'; }}
               >
-                LinkedIn ↗
+                LinkedIn <ExternalLink size={12} />
               </a>
             </div>
           </div>

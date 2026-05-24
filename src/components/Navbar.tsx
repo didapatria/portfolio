@@ -24,20 +24,20 @@ export function Navbar() {
 
   useEffect(() => {
     const SECTIONS: ActiveSection[] = ['home', 'about', 'projects', 'mrt'];
+    const observers: IntersectionObserver[] = [];
 
-    const update = () => {
-      const y = window.scrollY + window.innerHeight / 3;
-      let current: ActiveSection = 'home';
-      for (const id of SECTIONS) {
-        const el = document.getElementById(id);
-        if (el && el.offsetTop <= y) current = id;
-      }
-      setActive(current);
-    };
+    SECTIONS.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        { rootMargin: '-48px 0px -50% 0px', threshold: 0 },
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
 
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    return () => window.removeEventListener('scroll', update);
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   return (
