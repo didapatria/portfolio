@@ -6,7 +6,7 @@ Refined Minimal Dark portfolio — SPA, Geist, zinc palette, dark/light toggle.
   <a href="https://portfolio-didapatrias-projects.vercel.app">
     <img src="https://img.shields.io/badge/Live-portfolio--didapatrias--projects.vercel.app-0a1322?logo=vercel&logoColor=white" alt="Live" />
   </a>
-  <img src="https://img.shields.io/badge/version-2.1.0-1d6fe8" />
+  <img src="https://img.shields.io/badge/version-2.1.1-1d6fe8" />
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white" />
 </p>
@@ -75,6 +75,19 @@ NEXT_PUBLIC_BUILD_SHA = $VERCEL_GIT_COMMIT_SHA
 ```
 
 ## Changelog
+
+### v2.1.1
+- UI/UX polish + design system audit — full review delivered, 12 issues fixed
+- Fix: `ProjectCard` anchor links (`#mrt`) no longer open in new tab
+- Fix: duplicate `<h1>` — MRT section now `<h2>`, subsections `<h3>`
+- A11y: skip-to-content link + `:focus-visible` ring globally
+- `StatusBadge` differentiation — `Building2` (enterprise) vs `Lock` (confidential) icons
+- Text arrows (`↗ → ←`) replaced with lucide icons throughout
+- Animation tokens unified — `--dur-fast` 150ms, `--dur-base` 250ms
+- Theme-aware `--primary-glow` + `--focus-ring` tokens
+- Availability pill with pulse (respects reduced-motion)
+- Footer added with build hash commit link, nav, social
+- Removed dead `PageTransition` code (no-op in SPA)
 
 ### v2.1.0
 - SPA — all sections on single page with anchor navigation + IntersectionObserver active nav
