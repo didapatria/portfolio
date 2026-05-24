@@ -18,7 +18,7 @@ Next.js 16 · App Router · React 19 · Tailwind v4 · Framer Motion · TypeScri
 
 ## Architecture
 
-Single-page scroll at `/`, sub-route at `/mrt` (case study).
+Hybrid: SPA scroll for `/` (Home · About · Projects), dedicated route `/mrt` (case study). v3.0.0.
 
 **Token system** — `src/styles/tokens.css` is the only source of truth for color, type, spacing, and motion. **No hex values in components** — always use `var(--*)`. Tokens imported in `globals.css` and available everywhere. Light mode via `@media (prefers-color-scheme: light)` overrides in the same file.
 
