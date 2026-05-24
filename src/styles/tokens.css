@@ -101,10 +101,12 @@
 /* ── NAVBAR RESPONSIVE ───────────────────────── */
 .nav-desktop { display: flex; }
 .nav-hamburger { display: none !important; }
+.nav-available { display: inline-flex; }
 
 @media (max-width: 768px) {
   .nav-desktop  { display: none !important; }
   .nav-hamburger { display: flex !important; }
+  .nav-available { display: none !important; }
 }
 
 /* ── CERT ACCORDION ──────────────────────────── */
@@ -147,7 +149,6 @@
 
 /* ── RESPONSIVE GRIDS ────────────────────────── */
 @media (max-width: 768px) {
-  .hero-grid       { grid-template-columns: 1fr !important; }
   .about-grid      { grid-template-columns: 1fr !important; }
   .projects-two-up { grid-template-columns: 1fr !important; }
   .mrt-entry-btns  { grid-template-columns: 1fr 1fr !important; }

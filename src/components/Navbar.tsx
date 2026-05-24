@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { MobileMenu } from './MobileMenu';
 
-type ActiveSection = 'home' | 'about' | 'projects' | 'mrt';
+type ActiveSection = 'home' | 'about' | 'projects';
 
 const LINKS = [
   { label: 'Work',     section: 'home' as ActiveSection },
@@ -13,25 +13,32 @@ const LINKS = [
   { label: 'Projects', section: 'projects' as ActiveSection },
 ] as const;
 
-function isLinkActive(linkSection: ActiveSection, active: ActiveSection) {
-  if (linkSection === 'projects') return active === 'projects' || active === 'mrt';
-  return active === linkSection;
-}
-
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<ActiveSection>('home');
+  const ratios = useRef<Record<ActiveSection, number>>({ home: 0, about: 0, projects: 0 });
 
   useEffect(() => {
-    const SECTIONS: ActiveSection[] = ['home', 'about', 'projects', 'mrt'];
+    const SECTIONS: ActiveSection[] = ['home', 'about', 'projects'];
     const observers: IntersectionObserver[] = [];
 
     SECTIONS.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(id); },
-        { rootMargin: '-48px 0px -50% 0px', threshold: 0 },
+        ([entry]) => {
+          ratios.current[id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+          let top: ActiveSection = 'home';
+          let topRatio = -1;
+          (Object.keys(ratios.current) as ActiveSection[]).forEach((k) => {
+            if (ratios.current[k] > topRatio) {
+              topRatio = ratios.current[k];
+              top = k;
+            }
+          });
+          if (topRatio > 0) setActive(top);
+        },
+        { rootMargin: '-40% 0px -55% 0px', threshold: 0 },
       );
       obs.observe(el);
       observers.push(obs);
@@ -63,12 +70,24 @@ export function Navbar() {
             fontSize: 14,
             color: 'var(--fg-1)',
             letterSpacing: '-0.01em',
-            marginRight: 'auto',
             textDecoration: 'none',
           }}
         >
           AFP
         </a>
+
+        <div
+          className="nav-available"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginLeft: 12, marginRight: 'auto' }}
+        >
+          <span
+            className="availability-dot"
+            style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--green)', flexShrink: 0 }}
+          />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--fg-3)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Available
+          </span>
+        </div>
 
         {/* Desktop */}
         <nav
@@ -82,7 +101,7 @@ export function Navbar() {
               style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: 13,
-                color: isLinkActive(section, active) ? 'var(--fg-1)' : 'var(--fg-3)',
+                color: active === section ? 'var(--fg-1)' : 'var(--fg-3)',
                 transition: 'color 150ms ease',
                 textDecoration: 'none',
               }}
