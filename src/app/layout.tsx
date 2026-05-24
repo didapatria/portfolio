@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { KeyboardShortcuts } from '@/components/KeyboardShortcuts';
 import './globals.css';
 
 const geistSans = Geist({
@@ -17,13 +18,16 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
+const TITLE = 'Adinda Fadhil Patria — Fullstack Engineer';
+const DESCRIPTION = 'Fullstack engineer building complete systems — design tokens to E2E tests to production. Currently at PT MRT Jakarta.';
+
 export const metadata: Metadata = {
-  title: 'Adinda Fadhil Patria — Fullstack Engineer',
-  description: 'I ship complete systems end-to-end: design tokens to E2E tests to Fly.io. Based in Jakarta.',
+  title: TITLE,
+  description: DESCRIPTION,
   metadataBase: new URL('https://didapatria.dev'),
   openGraph: {
-    title: 'Adinda Fadhil Patria — Fullstack Engineer',
-    description: 'Portfolio — Next.js, TypeScript, Playwright, Fly.io.',
+    title: TITLE,
+    description: DESCRIPTION,
     url: 'https://didapatria.dev',
     siteName: 'Adinda Fadhil Patria',
     locale: 'en_US',
@@ -31,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Adinda Fadhil Patria — Fullstack Engineer',
-    description: 'Portfolio — Next.js, TypeScript, Playwright, Fly.io.',
+    title: TITLE,
+    description: DESCRIPTION,
   },
   icons: {
     icon: '/didapatria.svg',
@@ -54,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <ScrollToTop />
+        <KeyboardShortcuts />
       </body>
     </html>
   );
