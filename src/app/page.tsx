@@ -19,7 +19,7 @@ const MRT_LINKS = [
 const STATS = [
   { value: 127, suffix: '',  label: 'E2E PASSING',  delay: 100 },
   { value: 2,   suffix: '+', label: 'YRS SHIPPING', delay: 280 },
-  { value: 3,   suffix: '',  label: 'LIVE DEPLOYS', delay: 460, isLast: true as const },
+  { value: 4,   suffix: '',  label: 'LIVE DEPLOYS', delay: 460, isLast: true as const },
 ];
 
 // ── ABOUT DATA ───────────────────────────────────
@@ -302,6 +302,20 @@ export default function HomePage() {
                 { label: 'Case Study',     href: '/mrt' },
                 { label: 'API Docs',       href: 'https://mrt-station-backend.fly.dev/api/docs' },
                 { label: 'GitHub',         href: 'https://github.com/didapatria/mrt-station-dashboard' },
+              ]}
+            />
+          </div>
+
+          <div style={{ marginBottom: 14 }}>
+            <ProjectCard
+              variant="featured"
+              title="SIRAM — Rainwater IoT Dashboard"
+              period="May–Jun 2026"
+              status="live"
+              description="Frontend for an IoT rainwater-management platform — real-time sensor telemetry, Mapbox GL station maps, ECharts analytics, and a contract-first API layer with Zod schemas and swappable MSW mock/live clients."
+              stackChips={['React', 'TypeScript', 'Vite', 'TanStack Query', 'Zustand', 'ECharts', 'Mapbox GL']}
+              links={[
+                { label: 'Live Demo', href: 'https://siram-rouge.vercel.app', primary: true },
               ]}
             />
           </div>
